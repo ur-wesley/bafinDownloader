@@ -20,7 +20,7 @@ jobs:
 
     - name: Build Executable
       run: |
-        go build -ldflags "-s -w" -o bin/ .
+        go build -ldflags "-s -w" -o bin/BafinDownloader.exe .
 
     - name: Upload Executable to Release
       uses: actions/upload-release-asset@v1
