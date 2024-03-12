@@ -4,30 +4,19 @@ on:
   release:
     types: [created]
 
+permissions:
+    contents: write
+    packages: write
+
 jobs:
-  build:
+  release-windows:
     name: Build Windows Executable
     runs-on: windows-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Setup Go
-      uses: actions/setup-go@v2
+    - uses: actions/checkout@v4
+    - uses: wangyoucao577/go-release-action@v1
       with:
-        go-version: '1.22'
-
-    - name: Build Executable
-      run: |
-        go build -ldflags "-s -w" -o bin/BafinDownloader.exe .
-
-    - name: Upload Executable to Release
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ github.event.release.upload_url }}
-        asset_path: ./bin/BafinDownloader.exe
-        asset_name: BafinDownloader.exe
-        asset_content_type: application/octet-stream
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        goos: windows
+        goarch: amd64
+        ldflags: -s -w
