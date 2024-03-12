@@ -9,18 +9,30 @@ permissions:
     packages: write
 
 jobs:
-  release-windows:
-    name: Build Windows Executable
-    runs-on: ubuntu-latest
+  build:
+    name: Build and Compress Executable
+    runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: wangyoucao577/go-release-action@v1
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        goos: windows
-        goarch: amd64
-        ldflags: -s -w
-        executable_compression: upx
-        binary_name: BafinDownloader
-        asset_name: BafinDownloader
-        md5sum: false
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.22'
+
+      - name: Install UPX
+        run: choco install upx
+
+      - name: Build Executable with Make
+        run: make build
+
+      - name: Compress Executable with UPX
+        run: upx /bin/BafinDownloader.exe
+
+      - name: Upload Executable to Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: /bin/BafinDownloader.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
