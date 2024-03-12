@@ -125,7 +125,7 @@ func saveFile(dir, name string, content []byte) error {
 		return err
 	}
 
-	cwd, err := os.Executable()
+	cwd, err := os.Getwd()
 	if err != nil {
 		fmt.Println(Fata(err))
 		return err
