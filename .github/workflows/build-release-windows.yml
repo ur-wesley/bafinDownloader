@@ -1,6 +1,11 @@
 name: Build and Release Windows Executable
 on:
   workflow_dispatch:
+    inputs:
+      tags:
+        description: 'set release tag'
+        required: true
+        type: boolean
   release:
     types: [created]
 
