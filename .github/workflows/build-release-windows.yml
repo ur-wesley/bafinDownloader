@@ -19,10 +19,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: wangyoucao577/go-release-action@v1.49
+    - uses: wangyoucao577/go-release-action@v1
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         goos: windows
         goarch: amd64
-        ldflags: -s -w
+        build_command: make
         executable_compression: upx
+        binary_name: BafinDownloader
+        asset_name: BafinDownloader
+        md5sum: false
