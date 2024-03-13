@@ -10,6 +10,9 @@ import (
 )
 
 func LoadList() ([]string, error) {
+	if len(os.Args) < 2 {
+		return nil, fmt.Errorf("no file name provided")
+	}
 	fileName := os.Args[1]
 	if fileName == "" {
 		return nil, fmt.Errorf("no file name provided")
@@ -18,7 +21,14 @@ func LoadList() ([]string, error) {
 	if err != nil {
 		return nil, err
 	}
-	return strings.Split(string(file), "\r\n"), nil
+	list := strings.Split(string(file), "\r\n")
+	for i := 0; i < len(list); i++ {
+		if list[i] == "" {
+			list = append(list[:i], list[i+1:]...)
+			i--
+		}
+	}
+	return list, nil
 }
 
 func ReadFile(path string) ([]byte, error) {
