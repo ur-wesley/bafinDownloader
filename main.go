@@ -42,9 +42,10 @@ func main() {
 
 func getCsv(client *http.Client, name string) {
 	values := url.Values{
-		"emittentName": {name},
+		"emittentName": {""},
+		"emittentIsin": {name},
 	}
-	domain := fmt.Sprintf("https://portal.mvp.bafin.de/database/DealingsInfo/sucheForm.do?meldepflichtigerName=&zeitraum=0&d-4000784-e=1&emittentButton=Suche+Emittent&%s&zeitraumVon=&emittentIsin=&6578706f7274=1&zeitraumBis=", values.Encode())
+	domain := fmt.Sprintf("https://portal.mvp.bafin.de/database/DealingsInfo/sucheForm.do?meldepflichtigerName=&zeitraum=0&d-4000784-e=1&emittentButton=Suche+Emittent&%s&zeitraumVon=&6578706f7274=1&zeitraumBis=", values.Encode())
 	fmt.Println(aurora.Green("getting:"), name)
 	res, err := client.Get(domain)
 	if err != nil {
