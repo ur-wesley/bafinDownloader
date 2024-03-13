@@ -1,6 +1,6 @@
 # Bafin Downloader
 
-downloads the latest financial reports from
+downloads the latest financial reports based of ISIN from
 the [Bafin website](https://portal.mvp.bafin.de/database/DealingsInfo/sucheForm.do) based on the emittent name and
 returns the data as single and merged csv files.
 
@@ -10,12 +10,12 @@ returns the data as single and merged csv files.
 2. open the inside the folder with the executable a terminal (Windows `shift + right click` -> `open command window / terminal here`)
 3. run the executable with the following command: `./BafinDownloader <input_file>`, eg. `./BafinDownloader input.txt`
 
-> The input file should contain a list of Company names, each on a new line.
+> The input file should contain a list of Company ISIN, each on a new line.
 
  ```
-Company 1
-Company 2
-Company 3
+DE0012359698
+DE0005859123
+DE0005859456
 ```
 
 ## Build locally
