@@ -65,6 +65,12 @@ func getCsv(client *http.Client, name string) {
 		return
 	}
 	csv = csv[:n]
+	csvList := strings.Split(string(csv), "\n")
+	csvList = RemoveEmptyLines(csvList)
+	if len(csvList) == 1 {
+		return
+	}
+	csv = []byte(strings.Join(csvList, "\n"))
 	err = SaveFile(dir, name, csv)
 	if err != nil {
 		fmt.Println(aurora.White(err).BgRed())
@@ -95,12 +101,7 @@ func mergeCsv() {
 			fmt.Println(aurora.White(err).BgRed())
 		}
 		lines := strings.Split(string(content), "\n")
-		for i := 0; i < len(lines); i++ {
-			if lines[i] == "" {
-				lines = append(lines[:i], lines[i+1:]...)
-				i--
-			}
-		}
+		lines = RemoveEmptyLines(lines)
 		lines = lines[1:]
 		contentList = append(contentList, strings.Join(lines, "\n"))
 	}

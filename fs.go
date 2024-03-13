@@ -22,12 +22,7 @@ func LoadList() ([]string, error) {
 		return nil, err
 	}
 	list := strings.Split(string(file), "\r\n")
-	for i := 0; i < len(list); i++ {
-		if list[i] == "" {
-			list = append(list[:i], list[i+1:]...)
-			i--
-		}
-	}
+	list = RemoveEmptyLines(list)
 	return list, nil
 }
 
